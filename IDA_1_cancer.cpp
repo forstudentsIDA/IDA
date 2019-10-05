@@ -3,6 +3,9 @@
 #include <cmath>
 #include <stdlib.h>
 
+#include "conio.h"
+#include "time.h"
+
 using namespace std;
 
 int m = 11;
@@ -19,7 +22,7 @@ double dist(double *x, double *y, int m)
 
 int main()
 {
-    srand(0);
+    srand((unsigned)time(0));
     double **mas_tmp = new double*[n];
     for(int i=0; i<n; i++)
         mas_tmp[i] = new double[m];
@@ -65,24 +68,26 @@ int main()
 
     int n_train = 0.7*n;
     int n_test = n - n_train;
-    double **train = new double*[n_train];
-    for(int i=0; i<n_train; i++)
-        train[i] = new double [mm];
-    double **test = new double*[n_test];
-    for(int i=0; i<n_test; i++)
-        train[i] = new double {mm};
 
-    double *class_test = new double{n_test};
-    for(int i=0; i<n_test; i++)
+    double **train = new double*[n_train];
+    for(int i=0; i < n_train; i++)
+        train[i] = new double[mm];
+
+    double **test = new double*[n_test];
+    for(int i=0; i < n_test; i++)
+        test[i] = new double[mm];
+
+    double *class_test = new double[n_test];
+    for(int i=0; i < n_test; i++)
         class_test[i] = 0;
 
     double error = 0.0;
 
-    for(int i=0; i<n_test; i++)
+    for(int i=0; i < n_test; i++)
     {
         double tmpl = dist(test[i], train[0], mm);
         int close_i = 0;
-        for(int j=1; j<n_train; j++)
+        for(int j=1; j < n_train; j++)
         {
             double tmp2 = dist(test[i], train[j], mm);
             if(tmp2 < tmpl)
@@ -91,9 +96,9 @@ int main()
                 close_i = j;
             }
         }
-    class_test[i] = train[close_i][mm-1];
-    if(class_test[i] != test[i][mm-1])
-        error++;
+        class_test[i] = train[close_i][mm-1];
+        if(class_test[i] != test[i][mm-1])
+            error++;
     }
 
     cout << error << endl;
@@ -101,7 +106,7 @@ int main()
 
     cout << n_test << endl;
 
-    cout << "CLassification error is " << error << endl;
+    cout << "Classification error is " << error << endl;
 
     ofstream out("out.txt");
     for(int i=0; i<n; i++)
