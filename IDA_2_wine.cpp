@@ -3,16 +3,13 @@
 #include <stdlib.h>
 #include <cmath>
 
+#include "conio.h"
+#include "time.h"
+
 using namespace std;
 
 int m = 14;
 int n = 178;
-//int mm = 10;
-
-/*double myrandom(double lb, double ub)
-{
-
-}*/
 
 double dist(double *x, double *y, int m)
 {
@@ -26,7 +23,7 @@ double dist(double *x, double *y, int m)
 
 int main()
 {
-    srand(0);
+    srand((unsigned)time(0));
     double **mas = new double*[n];
     for(int i=0; i<n; i++)
         mas[i] = new double[m];
@@ -111,7 +108,4 @@ int main()
             out << mas[i][j] << "\t";
         out << endl;
     }
-
- /*   double x = myrandom(0, 100);
-    cout << x << endl;*/
 }
